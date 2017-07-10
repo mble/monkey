@@ -22,7 +22,7 @@ func stringFromFile(filename string) string {
 }
 
 func TestNextToken(t *testing.T) {
-	input := stringFromFile("test.monkey")
+	input := stringFromFile("lexer_test.monkey")
 
 	tests := []struct {
 		expectedType    token.Type
