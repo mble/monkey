@@ -140,7 +140,7 @@ type ExpressionStatement struct {
 	Expression Expression
 }
 
-func (es *ExpressionStatement) statmentNode() {}
+func (es *ExpressionStatement) statementNode() {}
 
 // TokenLiteral returns the token literal for the expression statement
 func (es *ExpressionStatement) TokenLiteral() string {
@@ -154,4 +154,23 @@ func (es *ExpressionStatement) String() string {
 	}
 
 	return ""
+}
+
+// IntegerLiteral represents integer literal
+// expressions
+type IntegerLiteral struct {
+	Token token.Token
+	Value int64
+}
+
+func (il *IntegerLiteral) expressionNode() {}
+
+// TokenLiteral returns the token literal for the integer literal expression
+func (il *IntegerLiteral) TokenLiteral() string {
+	return il.Token.Literal
+}
+
+// String returns the integer literal expression as a string
+func (il *IntegerLiteral) String() string {
+	return il.Token.Literal
 }
