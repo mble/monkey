@@ -43,6 +43,21 @@ func (i *Identifier) String() string {
 	return i.Value
 }
 
+// Boolean represents the TRUE and FALSE
+// tokens
+type Boolean struct {
+	Token token.Token
+	Value bool
+}
+
+func (b *Boolean) expressionNode() {}
+
+// TokenLiteral returns the token literal for the boolean
+func (b *Boolean) TokenLiteral() string { return b.Token.Literal }
+
+// String returns the boolean value as a string
+func (b *Boolean) String() string { return b.Token.Literal }
+
 // LetStatement represents the Statement
 // that tracks the identifier, token and
 // expression that produces the value
