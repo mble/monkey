@@ -171,6 +171,29 @@ func (es *ExpressionStatement) String() string {
 	return ""
 }
 
+// BlockStatement represents blocks, which are like
+// mini-Programs, consisting of many Statements
+type BlockStatement struct {
+	Token      token.Token
+	Statements []Statement
+}
+
+func (bs *BlockStatement) statementNode() {}
+
+// TokenLiteral returns the token literal for the block statement
+func (bs *BlockStatement) TokenLiteral() string { return bs.Token.Literal }
+
+// String returns the string representation of the block statement
+func (bs *BlockStatement) String() string {
+	var out bytes.Buffer
+
+	for _, s := range bs.Statements {
+		out.WriteString(s.String())
+	}
+
+	return out.String()
+}
+
 // IntegerLiteral represents integer literal
 // expressions
 type IntegerLiteral struct {
@@ -242,6 +265,37 @@ func (ie *InfixExpression) String() string {
 	out.WriteString(" " + ie.Operator + " ")
 	out.WriteString(ie.Right.String())
 	out.WriteString(")")
+
+	return out.String()
+}
+
+// IfExpression represents if control-flow expressions,
+// where the consequence and alternative are block statements
+type IfExpression struct {
+	Token       token.Token
+	Condition   Expression
+	Consequence *BlockStatement
+	Alternative *BlockStatement
+}
+
+func (ie *IfExpression) expressionNode() {}
+
+// TokenLiteral returns the token literal for the if expression
+func (ie *IfExpression) TokenLiteral() string { return ie.Token.Literal }
+
+// String returns the if statement as a string
+func (ie *IfExpression) String() string {
+	var out bytes.Buffer
+
+	out.WriteString("if")
+	out.WriteString(ie.Condition.String())
+	out.WriteString(" ")
+	out.WriteString(ie.Consequence.String())
+
+	if ie.Alternative != nil {
+		out.WriteString("else ")
+		out.WriteString(ie.Alternative.String())
+	}
 
 	return out.String()
 }
